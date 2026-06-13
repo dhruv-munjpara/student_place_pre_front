@@ -187,52 +187,81 @@
 
         questions.forEach((q, i) => {
             let html = `<div class='question'><p>${i + 1}. ${q[0]}</p>`;
+
             q[1].forEach((op, j) => {
-                html += `<label><input type="radio" name="q${i}" value="${j}"> ${op}</label>`;
+                html += `
+        <label>
+            <input type="radio" name="q${i}" value="${j}">
+            ${op}
+        </label>`;
             });
+
             html += "</div>";
             qDiv.innerHTML += html;
         });
 
         function startTest() {
-            welcome.classList.add("hidden");
-            testPage.classList.remove("hidden");
+            document.getElementById("welcome").classList.add("hidden");
+            document.getElementById("testPage").classList.remove("hidden");
         }
 
         function calculateIQ() {
+
+            // All questions compulsory
+            for (let i = 0; i < questions.length; i++) {
+                let ans = document.querySelector(`input[name='q${i}']:checked`);
+
+                if (!ans) {
+                    alert("Please answer all questions before submitting!");
+                    return;
+                }
+            }
+
             let score = 0;
+
             questions.forEach((q, i) => {
                 let ans = document.querySelector(`input[name='q${i}']:checked`);
-                if (ans && parseInt(ans.value) === q[2]) score++;
+
+                if (parseInt(ans.value) === q[2]) {
+                    score++;
+                }
             });
-            let iq = 70 + (score * 5);
+
+            // IQ Calculation
+            let iq = 50 + (score * 5);
+
             document.getElementById("iq").value = iq;
-            alert("IQ Score: " + iq);
-            testPage.classList.add("hidden");
-            detailsPage.classList.remove("hidden");
+
+            alert("Your IQ Score: " + iq);
+
+            document.getElementById("testPage").classList.add("hidden");
+            document.getElementById("detailsPage").classList.remove("hidden");
         }
 
         function predictPlacement() {
+
             let iq = document.getElementById("iq").value;
             let cgpa = document.getElementById("cgpa").value;
             let prev = document.getElementById("prev").value;
             let comm = document.getElementById("comm").value;
             let projects = document.getElementById("projects").value;
 
-            detailsPage.classList.add("hidden");
-            resultPage.classList.remove("hidden");
+            document.getElementById("detailsPage").classList.add("hidden");
+            document.getElementById("resultPage").classList.remove("hidden");
 
-            finalResult.innerHTML = `
-📊 IQ Score: ${iq}<br><br>
-🎯 CGPA: ${cgpa}<br><br>
-💬 Communication: ${comm}<br><br>
-💻 Projects: ${projects}<br><br>
-⏳ Predicting...
-`;
+            document.getElementById("finalResult").innerHTML = `
+    📊 IQ Score: ${iq}<br><br>
+    🎯 CGPA: ${cgpa}<br><br>
+    💬 Communication: ${comm}<br><br>
+    💻 Projects: ${projects}<br><br>
+    ⏳ Predicting...
+    `;
 
             fetch("https://student-placement-prediction-61jo.onrender.com/predict", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     IQ: Number(iq),
                     CGPA: Number(cgpa),
@@ -244,22 +273,31 @@
                 .then(res => res.json())
                 .then(data => {
 
-                    if (data.prediction == "Yes") {
-                        finalResult.innerHTML = `
-    🎉 High Placement Probability<br><br>
-    You have strong chances of getting placed.
-    `;
-                    }
-                    else {
-                        finalResult.innerHTML = `
-    ⚠ Low Placement Probability<br><br>
-    Focus on improving skills, projects and academics.
-    `;
+                    if (data.prediction === "Yes") {
+
+                        document.getElementById("finalResult").innerHTML = `
+            🎉 <b>High Placement Probability</b><br><br>
+            You have strong chances of getting placed.
+            `;
+
+                    } else {
+
+                        document.getElementById("finalResult").innerHTML = `
+            ⚠ <b>Low Placement Probability</b><br><br>
+            Focus on improving your CGPA, communication skills and projects.
+            `;
+
                     }
 
                 })
-                .catch(() => {
-                    finalResult.innerHTML += "<br><br>⚠ Backend not connected.";
+                .catch(error => {
+
+                    document.getElementById("finalResult").innerHTML = `
+        ❌ Backend not connected.<br><br>
+        Please check API deployment.
+        `;
+
+                    console.error(error);
                 });
         }
     </script>
