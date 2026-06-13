@@ -170,17 +170,40 @@
     </div>
 
     <script>
-        const questions = [
-            ["2,4,8,16, ?", ["32", "24", "30"], 0],
-            ["15% of 200 = ?", ["30", "25", "20"], 0],
-            ["Odd one out?", ["2", "4", "7"], 2],
-            ["10 × 10 = ?", ["100", "90", "110"], 0],
-            ["50 + 25 = ?", ["75", "70", "80"], 0],
-            ["Next: 1,4,9,16, ?", ["25", "20", "36"], 0],
-            ["60 km/hr for 3 hrs = ?", ["180", "120", "150"], 0],
-            ["Shape with 3 sides?", ["Triangle", "Square", "Circle"], 0],
-            ["5 workers finish work in 10 days. 1 worker?", ["50", "20", "40"], 0],
-            ["20% of 500 = ?", ["100", "80", "120"], 0]
+        const questions = [["2,4,8,16, ?", ["32", "24", "30", "28"], 0],
+        ["1,4,9,16, ?", ["20", "25", "30", "36"], 1],
+        ["Odd One Out?", ["Apple", "Mango", "Car", "Banana"], 2],
+        ["If A=1,B=2,C=3 then CAT=?", ["24", "22", "20", "18"], 0],
+        ["5 workers complete work in 10 days. 1 worker?", ["20", "40", "50", "60"], 2],
+
+        ["CPU Full Form?", ["Central Processing Unit", "Central Program Unit", "Computer Process Unit", "Control Processing Unit"], 0],
+        ["Which is an Operating System?", ["Chrome", "Linux", "Google", "Python"], 1],
+        ["Binary of Decimal 10?", ["1010", "1001", "1111", "1100"], 0],
+        ["Which memory is temporary?", ["HDD", "SSD", "RAM", "ROM"], 2],
+        ["Which device is output device?", ["Keyboard", "Mouse", "Monitor", "Scanner"], 2],
+
+        ["What is Data Science?", ["Data Analysis & Prediction", "Web Design", "Networking", "Gaming"], 0],
+        ["Which library is used for Data Analysis?", ["Pandas", "Flask", "React", "Bootstrap"], 0],
+        ["Which library is used for numerical operations?", ["NumPy", "Django", "PHP", "NodeJS"], 0],
+        ["Supervised Learning uses?", ["Labeled Data", "Unlabeled Data", "Images Only", "Text Only"], 0],
+        ["Classification predicts?", ["Category", "Continuous Value", "Table", "Database"], 0],
+        ["Regression predicts?", ["Continuous Value", "Class", "Category", "Group"], 0],
+        ["Which algorithm is used for Classification?", ["Random Forest", "Apriori", "PCA", "K-Means"], 0],
+        ["Train-Test Split is used for?", ["Model Evaluation", "Styling", "Database", "Hosting"], 0],
+        ["Overfitting means?", ["Model memorizes data", "Model learns nothing", "Fast Training", "Low Accuracy"], 0],
+        ["Accuracy means?", ["Correct Predictions Percentage", "Speed", "Memory", "Dataset Size"], 0],
+
+        ["HTML stands for?", ["Hyper Text Markup Language", "High Text Markup Language", "Home Text Markup Language", "Hyper Tool Markup Language"], 0],
+        ["CSS is used for?", ["Styling", "Database", "Backend", "Hosting"], 0],
+        ["JavaScript is used for?", ["Interactivity", "Storage", "Networking", "Database"], 0],
+        ["Which tag creates hyperlink?", ["<a>", "<h1>", "<div>", "<p>"], 0],
+        ["Which CSS property changes text color?", ["color", "font", "background", "margin"], 0],
+
+        ["SQL stands for?", ["Structured Query Language", "Standard Query Language", "Simple Query Language", "Stored Query Language"], 0],
+        ["API stands for?", ["Application Programming Interface", "Application Process Interface", "Advanced Program Interface", "Application Project Interface"], 0],
+        ["Git is used for?", ["Version Control", "Database", "Hosting", "Networking"], 0],
+        ["FastAPI is written in?", ["Python", "Java", "PHP", "C++"], 0],
+        ["Which company maintains Python?", ["Python Software Foundation", "Google", "Microsoft", "Oracle"], 0]
         ];
 
         const qDiv = document.getElementById("questions");
@@ -228,7 +251,7 @@
             });
 
             // IQ Calculation
-            let iq = 50 + (score * 5);
+            let iq = score * 5;
 
             document.getElementById("iq").value = iq;
 
